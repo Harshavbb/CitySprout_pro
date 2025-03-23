@@ -1,5 +1,6 @@
 import { Box, Typography, Button, Stack } from "@mui/material";
 import { styled } from "@mui/system";
+import { useNavigate, Link } from "react-router-dom";
 import ctaImage from "../assets/hero-bg.jpg"; // Add a relevant vector image
 
 const CTAContainer = styled(Box)(({ theme }) => ({
@@ -23,6 +24,8 @@ const CTAContainer = styled(Box)(({ theme }) => ({
 }));
 
 const CTASection = () => {
+  const navigate = useNavigate();
+
   return (
     <Box sx={{ py: 10, display: "flex", justifyContent: "center" }}>
       <CTAContainer>
@@ -42,6 +45,7 @@ const CTASection = () => {
               color="secondary" 
               size="large" 
               sx={{ fontWeight: "medium" }}
+              onClick={() => navigate("/signup")}
             >
               Get Started
             </Button>

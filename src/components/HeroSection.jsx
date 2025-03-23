@@ -1,9 +1,10 @@
 import { Box, Typography, Button } from "@mui/material";
 import { styled } from "@mui/system";
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
+import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import heroImage from "../assets/hero-bg.jpg";
 
-// Styled Component for the Hero Section
 const HeroSectionWrapper = styled(Box)({
   backgroundImage: `url(${heroImage})`,
   backgroundSize: "cover",
@@ -12,10 +13,11 @@ const HeroSectionWrapper = styled(Box)({
   display: "flex",
   alignItems: "center",
   justifyContent: "center",
+  flexDirection: "column",
   textAlign: "center",
   color: "#fff",
   position: "relative",
-  overflow: "hidden",
+  padding: "0 20px",
   "&::before": {
     content: '""',
     position: "absolute",
@@ -23,83 +25,91 @@ const HeroSectionWrapper = styled(Box)({
     left: 0,
     width: "100%",
     height: "100%",
-    background: "linear-gradient(to bottom, rgba(0, 50, 0, 0.5), rgba(0, 0, 0, 0.7))", // Smooth gradient overlay
+    background: "linear-gradient(to bottom, rgba(0, 50, 0, 0.5), rgba(0, 0, 0, 0.7))",
   },
 });
 
-// Styled Component for Content
-const HeroContent = styled(Box)({
+const TextContainer = styled(Box)({
   position: "relative",
-  zIndex: 1,
-  maxWidth: "700px",
-  padding: "20px",
+  zIndex: 2,
+  maxWidth: "80%",
 });
 
-// Motion Variants for Animations
-const containerVariants = {
-  hidden: { opacity: 0, y: 30 },
-  visible: {
-    opacity: 1,
-    y: 0,
-    transition: { duration: 0.8, staggerChildren: 0.2 },
-  },
-};
+const ButtonWrapper = styled(Box)({
+  marginTop: "20px",
+});
 
-const itemVariants = {
-  hidden: { opacity: 0, y: 20 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.5 } },
-};
+const messages = [
+  "Grow your own food, nourish your soul. 🌱",
+  "A greener city starts with you. 🍃",
+  "Cultivate the future, one plant at a time. 🌿",
+  "Turn concrete jungles into edible gardens! 🌍",
+];
 
 const HeroSection = () => {
+  const navigate = useNavigate();
+  const [username, setUsername] = useState(localStorage.getItem("username") || "");
+  const [index, setIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = !username && setInterval(() => setIndex((i) => (i + 1) % messages.length), 4000);
+    return () => clearInterval(interval);
+  }, [username]);
+
+  useEffect(() => {
+    window.addEventListener("storage", () => setUsername(localStorage.getItem("username") || ""));
+    return () => window.removeEventListener("storage", () => {});
+  }, []);
+
   return (
     <HeroSectionWrapper>
-      <HeroContent
-        component={motion.div}
-        variants={containerVariants}
-        initial="hidden"
-        animate="visible"
-      >
-        <Typography
-          variant="h2"
-          fontWeight="regular"
-          gutterBottom
-          component={motion.h2}
-          variants={itemVariants}
-          sx={{ letterSpacing: "1px", textShadow: "2px 2px 10px rgba(0,0,0,0.3)" }}
+      <TextContainer>
+        <AnimatePresence>
+          <motion.div
+            key={username ? "welcome" : messages[index]}
+            initial={{ opacity: 0, y: -10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            transition={{ duration: 0.8 }}
+          >
+            <Typography 
+              variant="h2" 
+              sx={{ 
+                fontSize: { xs: "2rem", sm: "3rem", md: "4rem" }, 
+                fontWeight: "regular" 
+              }}
+            >
+              {username ? `Welcome back, ${username}!` : messages[index]}
+            </Typography>
+          </motion.div>
+        </AnimatePresence>
+        <Typography 
+          variant="h5" 
+          sx={{ 
+            mt: 2, 
+            maxWidth: "600px", 
+            fontWeight: "light",
+            mx: "auto", 
+            textShadow: "1px 1px 8px rgba(0,0,0,0.4)" 
+          }}
         >
-          Welcome to CitySprout
+          Transform urban spaces into thriving green farms.
         </Typography>
-        <Typography
-          variant="h5"
-          sx={{ mb: 3 }}
-          component={motion.p}
-          variants={itemVariants}
-        >
-          Transform Urban Spaces into Thriving Green Farms
-        </Typography>
-        <Box display="flex" justifyContent="center" gap={2}>
+      </TextContainer>
+
+      {!username && (
+        <ButtonWrapper>
           <Button
             variant="contained"
             color="success"
             size="large"
-            component={motion.button}
-            variants={itemVariants}
-            whileHover={{ scale: 1.1, x: 5 }} // Interactive hover effect
+            sx={{ mt: 3, fontSize: "1.2rem", padding: "10px 20px" }}
+            onClick={() => navigate("/signup")}
           >
-            Get Started ➜
+            Get Started
           </Button>
-          <Button
-            variant="outlined"
-            color="inherit"
-            size="large"
-            component={motion.button}
-            variants={itemVariants}
-            whileHover={{ scale: 1.1, x: -5 }} // Slight move effect on hover
-          >
-            Learn More
-          </Button>
-        </Box>
-      </HeroContent>
+        </ButtonWrapper>
+      )}
     </HeroSectionWrapper>
   );
 };
