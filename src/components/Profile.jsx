@@ -62,7 +62,7 @@ const Profile = () => {
     setError("");
 
     try {
-      const response = await fetch(`${API_URL}//api/auth/user/profile/update`, {
+      const response = await fetch(`${API_URL}/api/auth/user/profile/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
