@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Box, Typography, Grid, Card, CardContent, CircularProgress } from "@mui/material";
+import API_URL from "./config/api";
 
 const AvailableServices = () => {
   const [services, setServices] = useState([]);
@@ -9,7 +10,7 @@ const AvailableServices = () => {
   useEffect(() => {
     const fetchServices = async () => {
       try {
-        const response = await fetch("https://csbackend-jcrz.onrender.com/api/consultations/services");
+        const response = await fetch(`${API_URL}/api/consultations/services`);
         const data = await response.json();
         setServices(data);
       } catch (err) {

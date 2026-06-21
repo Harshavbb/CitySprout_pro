@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { Box, TextField, Button, Typography, CircularProgress, Alert } from "@mui/material";
 import { useNavigate } from "react-router-dom";
+import API_URL from "../config/api";
 
 const Profile = () => {
   const [user, setUser] = useState(null);
@@ -22,7 +23,7 @@ const Profile = () => {
 
     const fetchProfile = async () => {
       try {
-        const response = await fetch("https://csbackend-jcrz.onrender.com/api/auth/user/profile", {
+        const response = await fetch(`${API_URL}/api/auth/user/profile`, {
           method: "GET",
           headers: {
             "Content-Type": "application/json",
@@ -61,7 +62,7 @@ const Profile = () => {
     setError("");
 
     try {
-      const response = await fetch("https://csbackend-jcrz.onrender.com/api/auth/user/profile/update", {
+      const response = await fetch(`${API_URL}//api/auth/user/profile/update`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",

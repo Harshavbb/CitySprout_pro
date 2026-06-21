@@ -3,6 +3,7 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Google, Apple, Facebook } from "@mui/icons-material"; // Icons
 import signupIllustration from "./assets/standing_girl.png"; // Replace with your illustration
+import API_URL from "./config/api";
 
 const Signup = () => {
   const navigate = useNavigate();
@@ -34,7 +35,7 @@ const Signup = () => {
     };
   
     try {
-      const response = await fetch("https://csbackend-jcrz.onrender.com/api/auth/signup", {
+      const response = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

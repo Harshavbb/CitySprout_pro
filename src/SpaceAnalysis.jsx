@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Box, Button, Typography, Select, MenuItem, CircularProgress, Card, CardMedia, CardContent } from "@mui/material";
 import axios from "axios";
+import API_URL from "./config/api";
 
 const SpaceAnalysis = () => {
   const [image, setImage] = useState(null);
@@ -22,7 +23,7 @@ const SpaceAnalysis = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post("https://csbackend-jcrz.onrender.com/api/farming/upload", formData);
+      const response = await axios.post(`${API_URL}/api/farming/upload`, formData);
       setImageUrl(response.data.url);
     } catch (error) {
       console.error("Error uploading image", error);
@@ -39,7 +40,7 @@ const SpaceAnalysis = () => {
 
     try {
       setLoading(true);
-      const response = await axios.post("https://csbackend-jcrz.onrender.com/api/farming/detect", {
+      const response = await axios.post(`${API_URL}/api/farming/detect`, {
         image_url: imageUrl,
         sunlight,
         water_availability: waterAvailability,
