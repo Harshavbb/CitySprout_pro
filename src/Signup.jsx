@@ -1,8 +1,8 @@
-import { Box, Button, TextField, Typography, IconButton, Divider, Alert } from "@mui/material";
 import { useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { Google, Apple, Facebook } from "@mui/icons-material"; // Icons
-import signupIllustration from "./assets/standing_girl.png"; // Replace with your illustration
+import { useNavigate, Link as RouterLink } from "react-router-dom";
+import { Box, Button, TextField, Typography, IconButton, Divider, Alert, Link } from "@mui/material";
+import { Google, Apple, Facebook } from "@mui/icons-material";
+import signupIllustration from "./assets/Register.png"; 
 import API_URL from "./config/api";
 
 const Signup = () => {
@@ -10,7 +10,7 @@ const Signup = () => {
   const [formData, setFormData] = useState({
     username: "",
     email: "",
-    role: "user", // Fixed role
+    role: "user", 
     password: "",
   });
 
@@ -28,26 +28,22 @@ const Signup = () => {
     setSuccess("");
   
     const payload = {
-      name: formData.username, // Send username as 'name'
+      name: formData.username, 
       email: formData.email,
       password: formData.password,
-      role: "user", // Manually include 'role' even though it's not in the form
+      role: "user", 
     };
   
     try {
       const response = await fetch(`${API_URL}/api/auth/signup`, {
         method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
+        headers: { "Content-Type": "application/json" },
         body: JSON.stringify(payload),
       });
   
       const data = await response.json();
   
-      if (!response.ok) {
-        throw new Error(data.message || "Signup failed");
-      }
+      if (!response.ok) throw new Error(data.message || "Signup failed");
   
       setSuccess("Signup successful! Redirecting...");
       setTimeout(() => navigate("/login"), 2000);
@@ -57,140 +53,154 @@ const Signup = () => {
       setLoading(false);
     }
   };
-  
+
+  // Compact Pill-shaped Input Styling
+  const inputStyles = {
+    mb: 1.5, // Tighter margin to fit more fields without scrolling
+    "& .MuiOutlinedInput-root": {
+      borderRadius: "50px",
+      backgroundColor: "#FFFFFF",
+      "& fieldset": { borderColor: "#E5E8DF", transition: "all 0.3s ease" },
+      "&:hover fieldset": { borderColor: "primary.main" },
+      "&.Mui-focused fieldset": { borderColor: "primary.main", borderWidth: "1px" },
+    }
+  };
 
   return (
-    <Box
-      sx={{
-        display: "flex",
-        height: "95vh",
-        alignItems: "center",
-        width: "99vw",
-        justifyContent: "center",
-        backgroundColor: "#f8f8f8",
-        padding: 4,
-      }}
-    >
-      <Box
-        sx={{
-          display: "flex",
-          width: "900px",
-          backgroundColor: "#fff",
-          borderRadius: "12px",
-          boxShadow: "0px 4px 12px rgba(0,0,0,0.1)",
-          overflow: "hidden",
+    // Outer wrapper flex-centers the card and prevents scroll
+    <Box sx={{ minHeight: "85vh", display: "flex", alignItems: "center", justifyContent: "center", p: 2 }}>
+      
+      {/* The Floating Editorial Card */}
+      <Box 
+        sx={{ 
+          display: "flex", 
+          flexDirection: { xs: "column", md: "row" }, 
+          width: "100%", 
+          maxWidth: "900px", 
+          backgroundColor: "#FFFFFF", 
+          borderRadius: "32px", 
+          border: "1px solid #E5E8DF",
+          boxShadow: "0 24px 48px rgba(0,0,0,0.03)", 
+          overflow: "hidden" 
         }}
       >
-        {/* Left Side - Form Section */}
-        <Box sx={{ flex: 1, padding: "3rem", textAlign: "left" }}>
-          <Typography variant="h4" fontWeight="bold">
-            Welcome!
+        
+        {/* Left Side - Form Box */}
+        <Box sx={{ flex: 1.2, p: { xs: 4, md: 5 }, display: "flex", flexDirection: "column", justifyContent: "center" }}>
+          
+          <Typography variant="overline" sx={{ color: "secondary.main", fontWeight: 600, letterSpacing: "1px", mb: 0.5 }}>
+            Join The Movement
           </Typography>
-          <Typography variant="body2" color="textSecondary" sx={{ mb: 3 }}>
+          <Typography variant="h4" sx={{ fontWeight: 600, color: "text.primary", mb: 1, letterSpacing: "-0.02em" }}>
+            Create an Account
+          </Typography>
+          <Typography variant="body2" sx={{ color: "text.secondary", mb: 2 }}>
             Sign up to start your journey with CitySprout.
           </Typography>
 
-          {error && <Alert severity="error">{error}</Alert>}
-          {success && <Alert severity="success">{success}</Alert>}
+          {error && <Alert severity="error" sx={{ mb: 2, py: 0, borderRadius: "12px" }}>{error}</Alert>}
+          {success && <Alert severity="success" sx={{ mb: 2, py: 0, borderRadius: "12px" }}>{success}</Alert>}
 
           <TextField
-            label="Username"
+            label="Full Name"
             name="username"
             fullWidth
-            margin="normal"
-            variant="outlined"
-            InputProps={{ sx: { borderRadius: "30px" } }}
+            size="small" // Compact size
             value={formData.username}
             onChange={handleChange}
+            sx={inputStyles}
           />
           <TextField
-            label="Email"
+            label="Email Address"
             name="email"
             type="email"
             fullWidth
-            margin="normal"
-            variant="outlined"
-            InputProps={{ sx: { borderRadius: "30px" } }}
+            size="small"
             value={formData.email}
             onChange={handleChange}
+            sx={inputStyles}
           />
           <TextField
             label="Password"
             name="password"
             type="password"
             fullWidth
-            margin="normal"
-            variant="outlined"
-            InputProps={{ sx: { borderRadius: "30px" } }}
+            size="small"
             value={formData.password}
             onChange={handleChange}
+            sx={inputStyles}
           />
 
           <Button
             variant="contained"
-            sx={{
-              mt: 2,
-              width: "100%",
-              borderRadius: "30px",
-              backgroundColor: "#000",
-              color: "#fff",
-              padding: "12px",
-              fontSize: "16px",
-              fontWeight: "bold",
-              "&:hover": { backgroundColor: "#333" },
-            }}
+            fullWidth
             onClick={handleSubmit}
             disabled={loading}
+            sx={{
+              mt: 1,
+              mb: 2,
+              py: 1.2,
+              backgroundColor: "text.primary",
+              color: "#F6F7F2",
+              fontSize: "1rem",
+              borderRadius: "50px",
+              boxShadow: "none",
+              "&:hover": { backgroundColor: "action.hover", boxShadow: "none" },
+            }}
           >
-            {loading ? "Signing Up..." : "Sign Up"}
+            {loading ? <CircularProgress size={24} color="inherit" /> : "Sign Up"}
           </Button>
 
-          <Divider sx={{ my: 3 }}>or continue with</Divider>
+          <Divider sx={{ my: 2, color: "text.secondary", fontSize: "0.80rem", "&::before, &::after": { borderColor: "#E5E8DF" } }}>
+            or continue with
+          </Divider>
 
-          {/* Social Media Buttons */}
-          <Box sx={{ display: "flex", justifyContent: "center", gap: 2 }}>
-            <IconButton sx={{ bgcolor: "#000", color: "#fff", borderRadius: "50px" }}>
-              <Google />
-            </IconButton>
-            <IconButton sx={{ bgcolor: "#000", color: "#fff", borderRadius: "50px" }}>
-              <Apple />
-            </IconButton>
-            <IconButton sx={{ bgcolor: "#000", color: "#fff", borderRadius: "50px" }}>
-              <Facebook />
-            </IconButton>
+          <Box sx={{ display: "flex", justifyContent: "center", gap: 1.5, mb: 2 }}>
+            {[<Google key="g" fontSize="small" />, <Apple key="a" fontSize="small" />, <Facebook key="f" fontSize="small" />].map((icon, i) => (
+              <IconButton 
+                key={i} 
+                size="small"
+                sx={{ 
+                  border: "1px solid #E5E8DF", 
+                  color: "text.primary", 
+                  backgroundColor: "#FFFFFF",
+                  transition: "all 0.3s ease",
+                  "&:hover": { backgroundColor: "primary.main", color: "#FFFFFF", borderColor: "primary.main" } 
+                }}
+              >
+                {icon}
+              </IconButton>
+            ))}
           </Box>
 
-          <Typography
-            variant="body2"
-            sx={{ mt: 3, textAlign: "center", color: "text.secondary" }}
-          >
+          <Typography variant="body2" sx={{ textAlign: "center", color: "text.secondary" }}>
             Already have an account?{" "}
-            <span
-              style={{ color: "#4CAF50", cursor: "pointer", fontWeight: "bold" }}
-              onClick={() => navigate("/login")}
-            >
+            <Link component={RouterLink} to="/login" sx={{ color: "primary.main", fontWeight: 600, textDecoration: "none" }}>
               Login now
-            </span>
+            </Link>
           </Typography>
+
         </Box>
 
-        {/* Right Side - Image */}
-        <Box
-          sx={{
-            flex: 1,
-            display: "flex",
-            alignItems: "center",
+        {/* Right Side - Image Box */}
+        <Box 
+          sx={{ 
+            flex: 1, 
+            backgroundColor: "#F0F2EB", 
+            display: { xs: "none", md: "flex" }, 
+            alignItems: "center", 
             justifyContent: "center",
-            backgroundColor: "#E8F5E9",
-            padding: "2rem",
+            p: 4,
+            borderLeft: "1px solid #E5E8DF"
           }}
         >
           <img
             src={signupIllustration}
-            alt="Signup Illustration"
-            style={{ width: "100%", maxWidth: "350px" }}
+            alt="Join Us"
+            style={{ width: "100%", maxWidth: "300px", objectFit: "contain" }}
           />
         </Box>
+        
       </Box>
     </Box>
   );

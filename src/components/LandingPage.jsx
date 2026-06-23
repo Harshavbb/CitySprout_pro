@@ -1,4 +1,4 @@
-import HeroSection from "./HeroSection"; // Adjust path if needed
+import HeroSection from "./HeroSection"; 
 import HowItWorks from "./components/HowItWorks";
 
 
