@@ -75,28 +75,37 @@ function App() {
     <ThemeProvider theme={theme}>
       <CssBaseline />
       <Router>
-        <Navbar />
-        <Box sx={{ paddingTop: "65px", minHeight: "100vh" }}>
-          <Routes>
-            <Route
-              path="/"
-              element={
-                <>
-                  <HeroSection />
-                  <Features />
-                  <HowItWorks />
-                  <CTASection />
-                  <Footer />
-                </>
-              }
-            />
-            <Route path="/about" element={<About />} />
-            <Route path="/blog" element={<Blog />} />
-            <Route path="/services" element={<Services />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/profile" element={<Profile />} />
-          </Routes>
+        {/* Main wrapper configured as a Flex column to push Footer down */}
+        <Box sx={{ display: "flex", flexDirection: "column", minHeight: "100vh" }}>
+          <Navbar />
+          
+          {/* Content Wrapper takes up available space (flexGrow: 1) */}
+          <Box sx={{ paddingTop: "65px", flexGrow: 1 }}>
+            <Routes>
+              {/* Home Route (Footer removed from here) */}
+              <Route
+                path="/"
+                element={
+                  <>
+                    <HeroSection />
+                    <Features />
+                    <HowItWorks />
+                    <CTASection />
+                  </>
+                }
+              />
+              <Route path="/about" element={<About />} />
+              <Route path="/blog" element={<Blog />} />
+              <Route path="/services" element={<Services />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/profile" element={<Profile />} />
+            </Routes>
+          </Box>
+          
+          {/* Footer moved outside the Routes so it renders globally */}
+          <Footer />
+          
         </Box>
       </Router>
     </ThemeProvider>

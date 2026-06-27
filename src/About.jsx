@@ -1,5 +1,6 @@
 import { Box, Typography, Grid, Container, Chip } from "@mui/material";
 import { motion } from "framer-motion";
+import ArrowOutwardIcon from "@mui/icons-material/ArrowOutward";
 import aboutImage from "./assets/About.png"; 
 
 // Subtle, smooth animation variants
@@ -21,7 +22,7 @@ const AboutPage = () => {
     <Box sx={{ backgroundColor: "background.default", minHeight: "100vh", pb: 12 }}>
       
       {/* 1. Editorial Asymmetrical Hero */}
-      <Container maxWidth="lg" sx={{ pt: { xs: 12, md: 16 }, pb: 8 }}>
+      <Container maxWidth="lg" sx={{ pt: { xs: 6, md: 8 }, pb: 8 }}>
         <Grid container spacing={6} alignItems="center">
           {/* Left Side: Typography */}
           <Grid item xs={12} md={6} sx={{ zIndex: 2 }}>
@@ -51,7 +52,7 @@ const AboutPage = () => {
               >
                 Cultivating greener cities, one space at a time.
               </Typography>
-              <Typography variant="body1" sx={{ color: "text.secondary", fontSize: "1.1rem", maxWidth: "450px" }}>
+              <Typography variant="body1" sx={{ color: "text.secondary", fontSize: "1.1rem", maxWidth: "450px", lineHeight: 1.7 }}>
                 We believe that every concrete rooftop, empty balcony, and unused lot holds the potential to breathe life back into our urban environments.
               </Typography>
             </motion.div>
@@ -69,7 +70,7 @@ const AboutPage = () => {
                   borderRadius: "240px 240px 16px 16px", // Elegant arch
                   overflow: "hidden",
                   border: "1px solid #E5E8DF",
-                  backgroundColor: "#F0F2EB", // Matches the illustration background
+                  backgroundColor: "#F0F2EB", 
                   position: "relative",
                   display: "flex",
                   alignItems: "center",
@@ -88,7 +89,7 @@ const AboutPage = () => {
         </Grid>
       </Container>
 
-      {/* 2. High-Contrast Mission & Vision Block (Kept as is) */}
+      {/* 2. High-Contrast Mission & Vision Block */}
       <Container maxWidth="lg" sx={{ my: 8 }}>
         <motion.div initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-100px" }} variants={fadeInUp}>
           <Box 
@@ -100,9 +101,12 @@ const AboutPage = () => {
               borderRadius: "32px",
               textAlign: "center",
               position: "relative",
-              overflow: "hidden"
+              overflow: "hidden",
+              border: "1px solid rgba(255,255,255,0.1)", // Delicate inner frame
+              boxShadow: "inset 0 0 0 1px rgba(255,255,255,0.05)" // Double-line premium effect
             }}
           >
+            {/* Ambient Background Glow */}
             <Box 
               sx={{
                 position: "absolute", top: "-50%", left: "-10%", width: "600px", height: "600px",
@@ -126,14 +130,14 @@ const AboutPage = () => {
         </motion.div>
       </Container>
 
-      {/* 3. The Platform: Editorial Column Layout (Replacing Cards) */}
+      {/* 3. The Platform: "Inverted Hover" Matrix */}
       <Container maxWidth="lg" sx={{ my: 16 }}>
         <Typography variant="h3" sx={{ mb: 6, color: "text.primary", letterSpacing: "-0.02em" }}>
           The Platform
         </Typography>
         
         <motion.div variants={staggerContainer} initial="hidden" whileInView="visible" viewport={{ once: true, margin: "-50px" }}>
-          <Box sx={{ borderTop: "1px solid #E5E8DF", borderBottom: "1px solid #E5E8DF" }}>
+          <Box sx={{ borderTop: "1px solid #E5E8DF", borderBottom: "1px solid #E5E8DF", backgroundColor: "background.paper", borderRadius: "24px", overflow: "hidden" }}>
             <Grid container>
               {[
                 { title: "Join the Community", desc: "Sign up and become a part of the urban farming revolution." },
@@ -151,12 +155,21 @@ const AboutPage = () => {
                     p: { xs: 4, md: 5 },
                     borderRight: { xs: "none", md: index !== 3 ? "1px solid #E5E8DF" : "none" },
                     borderBottom: { xs: index !== 3 ? "1px solid #E5E8DF" : "none", md: "none" },
-                    overflow: "hidden"
+                    overflow: "hidden",
+                    transition: "all 0.4s cubic-bezier(0.25, 1, 0.5, 1)",
+                    cursor: "default",
+                    "&:hover": {
+                      backgroundColor: "text.primary", // Flashes to deep green
+                      "& .watermark": { color: "rgba(255, 255, 255, 0.05)" },
+                      "& .step-title": { color: "#FFFFFF" },
+                      "& .step-desc": { color: "rgba(255, 255, 255, 0.7)" }
+                    }
                   }}
                 >
                   <motion.div variants={fadeInUp}>
                     {/* Watermark Number */}
                     <Typography 
+                      className="watermark"
                       variant="h1" 
                       sx={{ 
                         position: "absolute", 
@@ -164,19 +177,20 @@ const AboutPage = () => {
                         right: 20, 
                         fontSize: "6rem", 
                         fontWeight: 700, 
-                        color: "rgba(65, 97, 27, 0.05)", // Ultra-faint primary color
+                        color: "rgba(65, 97, 27, 0.05)", 
                         zIndex: 0,
-                        lineHeight: 1
+                        lineHeight: 1,
+                        transition: "color 0.4s ease"
                       }}
                     >
                       {index + 1}
                     </Typography>
                     
                     <Box sx={{ position: "relative", zIndex: 1 }}>
-                      <Typography variant="h5" sx={{ mb: 2, color: "text.primary", fontWeight: 600 }}>
+                      <Typography className="step-title" variant="h5" sx={{ mb: 2, color: "text.primary", fontWeight: 600, transition: "color 0.4s ease" }}>
                         {step.title}
                       </Typography>
-                      <Typography variant="body2" sx={{ color: "text.secondary", lineHeight: 1.6 }}>
+                      <Typography className="step-desc" variant="body2" sx={{ color: "text.secondary", lineHeight: 1.6, transition: "color 0.4s ease" }}>
                         {step.desc}
                       </Typography>
                     </Box>
@@ -188,7 +202,7 @@ const AboutPage = () => {
         </motion.div>
       </Container>
 
-      {/* 4. Our Impact: Premium Ledger Layout (Replacing Cards) */}
+      {/* 4. Our Impact: Interactive Ledger */}
       <Container maxWidth="lg" sx={{ my: 16 }}>
         <Typography variant="h3" sx={{ mb: 6, color: "text.primary", letterSpacing: "-0.02em" }}>
           Our Impact
@@ -211,32 +225,43 @@ const AboutPage = () => {
                     py: 5,
                     borderTop: "1px solid #E5E8DF",
                     borderBottom: index === 3 ? "1px solid #E5E8DF" : "none",
-                    transition: "background-color 0.3s ease",
-                    "&:hover": { backgroundColor: "#FFFFFF" } // Very subtle hover highlight
+                    transition: "all 0.3s ease",
+                    cursor: "pointer",
+                    "&:hover": { 
+                      backgroundColor: "rgba(255,255,255,0.5)", 
+                      pl: { xs: 0, md: 2 }, // Slides content slightly to the right
+                      "& .ledger-arrow": {
+                        color: "primary.main",
+                        transform: "translate(4px, -4px) scale(1.1)"
+                      }
+                    } 
                   }}
                 >
                   <Typography 
                     variant="h4" 
-                    sx={{ 
-                      flex: 1, 
-                      color: "text.primary", 
-                      fontWeight: 500,
-                      mb: { xs: 2, md: 0 } 
-                    }}
+                    sx={{ flex: 1, color: "text.primary", fontWeight: 500, mb: { xs: 2, md: 0 }, fontSize: "1.75rem" }}
                   >
                     {goal.title}
                   </Typography>
-                  <Typography 
-                    variant="body1" 
-                    sx={{ 
-                      flex: 1.5, 
-                      color: "text.secondary", 
-                      fontSize: "1.1rem",
-                      lineHeight: 1.6 
-                    }}
-                  >
-                    {goal.desc}
-                  </Typography>
+                  
+                  <Box sx={{ flex: 1.5, display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+                    <Typography 
+                      variant="body1" 
+                      sx={{ color: "text.secondary", fontSize: "1.1rem", lineHeight: 1.6, pr: 4 }}
+                    >
+                      {goal.desc}
+                    </Typography>
+                    
+                    {/* Interactive Reveal Arrow */}
+                    <ArrowOutwardIcon 
+                      className="ledger-arrow" 
+                      sx={{ 
+                        fontSize: 32, 
+                        color: "#A3ADA7", 
+                        transition: "all 0.3s cubic-bezier(0.25, 1, 0.5, 1)" 
+                      }} 
+                    />
+                  </Box>
                 </Box>
               </motion.div>
             ))}
