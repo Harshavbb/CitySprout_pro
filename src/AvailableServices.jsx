@@ -109,27 +109,29 @@ const AvailableServices = () => {
                       {/* Metadata Grid */}
                       <Grid container spacing={2}>
                         {service.provider && (
-                          <Grid item xs={12} sm={6} md={3} sx={{ display: "flex", alignItems: "center", color: "text.primary", gap: 1 }}>
+                          <Grid item xs={6} md={3} sx={{ display: "flex", alignItems: "center", color: "text.primary", gap: 1 }}>
                             <PersonOutlineOutlinedIcon fontSize="small" sx={{ opacity: 0.6 }} />
                             <Typography variant="body2" fontWeight={500}>{service.provider}</Typography>
                           </Grid>
                         )}
                         {service.price && (
-                          <Grid item xs={12} sm={6} md={3} sx={{ display: "flex", alignItems: "center", color: "text.primary", gap: 1 }}>
+                          <Grid item xs={6} md={3} sx={{ display: "flex", alignItems: "center", color: "text.primary", gap: 1 }}>
                             <PaymentsOutlinedIcon fontSize="small" sx={{ opacity: 0.6 }} />
                             <Typography variant="body2" fontWeight={500}>{service.price}</Typography>
                           </Grid>
                         )}
                         {service.duration && (
-                          <Grid item xs={12} sm={6} md={3} sx={{ display: "flex", alignItems: "center", color: "text.primary", gap: 1 }}>
+                          <Grid item xs={6} md={3} sx={{ display: "flex", alignItems: "center", color: "text.primary", gap: 1 }}>
                             <AccessTimeOutlinedIcon fontSize="small" sx={{ opacity: 0.6 }} />
                             <Typography variant="body2" fontWeight={500}>{service.duration}</Typography>
                           </Grid>
                         )}
                         {service.contact && (
-                          <Grid item xs={12} sm={6} md={3} sx={{ display: "flex", alignItems: "center", color: "text.primary", gap: 1 }}>
+                          <Grid item xs={6} md={3} sx={{ display: "flex", alignItems: "center", color: "text.primary", gap: 1 }}>
                             <EmailOutlinedIcon fontSize="small" sx={{ opacity: 0.6 }} />
-                            <Typography variant="body2" fontWeight={500}>{service.contact}</Typography>
+                            <Typography variant="body2" fontWeight={500} sx={{ overflow: "hidden", textOverflow: "ellipsis", whiteSpace: "nowrap" }}>
+                              {service.contact}
+                            </Typography>
                           </Grid>
                         )}
                       </Grid>

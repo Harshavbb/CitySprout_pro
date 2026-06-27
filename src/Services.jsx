@@ -35,7 +35,7 @@ const Services = () => {
         <Container maxWidth="lg" sx={{ position: "relative", zIndex: 1 }}>
           <Stack 
             direction={{ xs: "column", md: "row" }} 
-            spacing={8} 
+            spacing={{ xs: 6, md: 8 }} 
             alignItems="center" 
             justifyContent="space-between"
           >
@@ -58,7 +58,7 @@ const Services = () => {
                   variant="h1" 
                   sx={{ 
                     color: "text.primary", 
-                    fontSize: { xs: "3.5rem", sm: "4.5rem", md: "5.5rem" }, 
+                    fontSize: { xs: "2.5rem", sm: "4.5rem", md: "5.5rem" }, 
                     fontWeight: 500, letterSpacing: "-0.04em", lineHeight: 1.05, mb: 4
                   }}
                 >
@@ -83,11 +83,9 @@ const Services = () => {
               {/* Vertical Pill Image Mask */}
               <Box
                 sx={{
-                  width: "100%", maxWidth: "380px", height: "550px",
-                  borderRadius: "200px", // Perfect pill shape
-                  overflow: "hidden", border: "1px solid #E5E8DF", backgroundColor: "#F0F2EB",
-                  display: "flex", alignItems: "center", justifyContent: "center", p: 4,
-                  position: "relative"
+                  width: "100%", maxWidth: "380px", height: { xs: "400px", md: "550px" },
+                  borderRadius: "200px", overflow: "hidden", border: "1px solid #E5E8DF", backgroundColor: "#F0F2EB",
+                  display: "flex", alignItems: "center", justifyContent: "center", p: 4, position: "relative"
                 }}
               >
                 <img 
@@ -100,10 +98,9 @@ const Services = () => {
               {/* Overlapping Floating Spec Card */}
               <Box 
                 sx={{
-                  position: "absolute", bottom: "15%", left: { xs: "0%", md: "-15%" },
-                  backgroundColor: "#FFFFFF", border: "1px solid #E5E8DF", borderRadius: "20px",
-                  p: 3, display: "flex", flexDirection: "column", gap: 1,
-                  boxShadow: "0 24px 48px rgba(0,0,0,0.03)" // Extremely soft lift
+                  position: "absolute", bottom: { xs: "5%", md: "15%" }, left: { xs: "50%", md: "-15%" }, transform: { xs: "translateX(-50%)", md: "none" },
+                  width: { xs: "85%", md: "auto" }, backgroundColor: "#FFFFFF", border: "1px solid #E5E8DF", borderRadius: "20px",
+                  p: 3, display: "flex", flexDirection: "column", gap: 1, boxShadow: "0 24px 48px rgba(0,0,0,0.03)" 
                 }}
               >
                 <Typography variant="overline" sx={{ color: "text.secondary", fontWeight: 600, letterSpacing: "1px" }}>

@@ -14,27 +14,35 @@ const HeroWrapper = styled(Box)(({ theme }) => ({
   backgroundColor: theme.palette.background.default,
   position: "relative",
   overflow: "hidden",
-  padding: "60px 0",
+  padding: "40px 0", // Tighter padding for mobile
+  [theme.breakpoints.up("md")]: {
+    padding: "60px 0",
+  }
 }));
 
 const FrameOutline = styled(Box)(({ theme }) => ({
   position: "absolute",
-  top: 20,
-  right: -20,
+  top: 15,
+  right: -15,
   width: "100%",
   maxWidth: "480px",
-  height: "600px",
+  height: "350px", // Shorter on mobile
   borderRadius: "240px 240px 16px 16px", 
   border: `1px solid ${theme.palette.secondary.main}`,
   zIndex: 0,
-  display: { xs: "none", md: "block" }
+  display: { xs: "none", md: "block" },
+  [theme.breakpoints.up("md")]: {
+    height: "600px", // Full height on desktop
+    top: 20,
+    right: -20,
+  }
 }));
 
 const ImageContainer = styled(Box)(({ theme }) => ({
   position: "relative",
   width: "100%",
   maxWidth: "480px",
-  height: "600px",
+  height: "350px", // Shorter on mobile
   margin: "0 auto",
   borderRadius: "240px 240px 16px 16px", 
   overflow: "hidden",
@@ -50,6 +58,9 @@ const ImageContainer = styled(Box)(({ theme }) => ({
   "&:hover img": {
     transform: "scale(1.03)", 
   },
+  [theme.breakpoints.up("md")]: {
+    height: "600px", // Full height on desktop
+  }
 }));
 
 const messages = [
@@ -65,7 +76,6 @@ const HeroSection = () => {
   const [index, setIndex] = useState(0);
 
   useEffect(() => {
-    // TWEAK 1: Slowed down to 5.5 seconds for better readability
     const interval = !username && setInterval(() => setIndex((i) => (i + 1) % messages.length), 5500);
     return () => clearInterval(interval);
   }, [username]);
@@ -78,7 +88,8 @@ const HeroSection = () => {
   return (
     <HeroWrapper>
       <Container maxWidth="lg">
-        <Stack direction={{ xs: "column-reverse", md: "row" }} spacing={8} alignItems="center" justifyContent="space-between">
+        {/* TWEAK: Adjusted spacing from 8 to responsive { xs: 5, md: 8 } */}
+        <Stack direction={{ xs: "column-reverse", md: "row" }} spacing={{ xs: 5, md: 8 }} alignItems="center" justifyContent="space-between">
           <Box sx={{ flex: 1, textAlign: { xs: "center", md: "left" }, zIndex: 2 }}>
             
             <Typography 
@@ -91,16 +102,16 @@ const HeroSection = () => {
               The Urban Farming Revolution
             </Typography>
 
-            {/* TWEAK: Rigid height bounding box to prevent ALL layout shifts */}
-            <Box sx={{ height: { xs: "150px", sm: "200px", md: "260px" }, mb: 3, display: "flex", alignItems: "center" }}>
+            <Box sx={{ height: { xs: "120px", sm: "160px", md: "260px" }, mb: 3, display: "flex", alignItems: "center" }}>
               <AnimatePresence mode="wait">
                 <motion.div
                   key={username ? "welcome" : messages[index]}
                   initial={{ opacity: 0, y: 10 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -10 }}
                   transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ width: "100%" }} // Ensures the text doesn't collapse horizontally
+                  style={{ width: "100%" }} 
                 >
-                  <Typography variant="h1" sx={{ fontSize: { xs: "2.5rem", sm: "3.5rem", md: "4.5rem" }, color: "text.primary", lineHeight: 1.05, letterSpacing: "-0.04em", fontWeight: 500 }}>
+                  {/* TWEAK: Smaller xs font size so it doesn't break words on tiny phones */}
+                  <Typography variant="h1" sx={{ fontSize: { xs: "2.25rem", sm: "3.5rem", md: "4.5rem" }, color: "text.primary", lineHeight: 1.05, letterSpacing: "-0.04em", fontWeight: 500 }}>
                     {username ? `Welcome back, ${username}!` : messages[index]}
                   </Typography>
                 </motion.div>
@@ -113,31 +124,21 @@ const HeroSection = () => {
                 : "Transform urban spaces into thriving green farms. Join the community and start harvesting your own fresh produce today."}
             </Typography>
 
-            {/* TWEAK 2: Smart Call-to-Action based on Auth State */}
             {username ? (
               <Button 
-                variant="contained" 
-                color="primary" 
-                size="large" 
-                startIcon={<AutoAwesomeIcon />} 
-                onClick={() => navigate("/services")} 
-                sx={{ px: 5, py: 1.5, fontSize: "1.05rem" }}
+                variant="contained" color="primary" size="large" startIcon={<AutoAwesomeIcon />} 
+                onClick={() => navigate("/services")} sx={{ px: 5, py: 1.5, fontSize: "1.05rem" }}
               >
                 Analyze a Space
               </Button>
             ) : (
               <Button 
-                variant="contained" 
-                color="primary" 
-                size="large" 
-                endIcon={<ArrowForwardRoundedIcon />} 
-                onClick={() => navigate("/signup")} 
-                sx={{ px: 5, py: 1.5, fontSize: "1.05rem" }}
+                variant="contained" color="primary" size="large" endIcon={<ArrowForwardRoundedIcon />} 
+                onClick={() => navigate("/signup")} sx={{ px: 5, py: 1.5, fontSize: "1.05rem", width: { xs: "100%", sm: "auto" } }}
               >
                 Get Started
               </Button>
             )}
-
           </Box>
 
           <Box sx={{ flex: 1, width: "100%", display: "flex", justifyContent: "center", position: "relative" }}>

@@ -69,8 +69,8 @@ const SpaceAnalysis = () => {
     <Box sx={{ minHeight: "85vh", py: { xs: 8, md: 10 }, backgroundColor: "background.default", position: "relative", overflow: "hidden" }}>
       
       {/* Ambient Background Orbs */}
-      <Box sx={{ position: "absolute", top: "-10%", left: "-10%", width: "600px", height: "600px", background: "radial-gradient(circle, rgba(131, 170, 70, 0.15) 0%, rgba(246,247,242,0) 70%)", zIndex: 0, pointerEvents: "none" }} />
-      <Box sx={{ position: "absolute", bottom: "-10%", right: "-10%", width: "800px", height: "800px", background: "radial-gradient(circle, rgba(169, 197, 220, 0.15) 0%, rgba(246,247,242,0) 70%)", zIndex: 0, pointerEvents: "none" }} />
+      <Box sx={{ position: "absolute", top: "-10%", left: "-10%", width: { xs: "300px", md: "600px" }, height: { xs: "300px", md: "600px" }, background: "radial-gradient(circle, rgba(131, 170, 70, 0.15) 0%, rgba(246,247,242,0) 70%)", zIndex: 0, pointerEvents: "none" }} />
+      <Box sx={{ position: "absolute", bottom: "-10%", right: "-10%", width: { xs: "400px", md: "800px" }, height: { xs: "400px", md: "800px" }, background: "radial-gradient(circle, rgba(169, 197, 220, 0.15) 0%, rgba(246,247,242,0) 70%)", zIndex: 0, pointerEvents: "none" }} />
 
       <Container maxWidth="md" sx={{ position: "relative", zIndex: 1 }}>
         <Box sx={{ textAlign: "center", mb: 6 }}>

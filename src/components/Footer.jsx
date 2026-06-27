@@ -11,12 +11,14 @@ const Footer = () => {
       sx={{
         backgroundColor: "text.primary", // #182a0c
         color: "#F6F7F2",
-        pt: 12,
+        pt: { xs: 8, md: 12 }, // TWEAK: Tighter top padding for mobile
         pb: 4,
       }}
     >
       <Container maxWidth="lg">
-        <Grid container spacing={8} mb={8}>
+        {/* TWEAK: Responsive spacing so vertical gaps aren't huge on phones */}
+        <Grid container spacing={{ xs: 5, md: 8 }} mb={{ xs: 6, md: 8 }}>
+          
           {/* Left: Logo & Mission */}
           <Grid item xs={12} md={4}>
             <Box sx={{ display: "flex", alignItems: "center", mb: 3 }}>
@@ -25,7 +27,7 @@ const Footer = () => {
                 CitySprout
               </Typography>
             </Box>
-            <Typography variant="body1" sx={{ color: "rgba(246, 247, 242, 0.7)", maxWidth: "90%", lineHeight: 1.7 }}>
+            <Typography variant="body1" sx={{ color: "rgba(246, 247, 242, 0.7)", maxWidth: { xs: "100%", md: "90%" }, lineHeight: 1.7 }}>
               Transforming urban spaces into thriving green hubs for a
               sustainable, food-secure future.
             </Typography>
@@ -84,7 +86,15 @@ const Footer = () => {
 
         <Divider sx={{ borderColor: "rgba(246, 247, 242, 0.1)", mb: 4 }} />
 
-        <Box sx={{ display: "flex", justifyContent: "space-between", flexWrap: "wrap", gap: 2 }}>
+        {/* TWEAK: Flex column on mobile to stack and center the copyright text beautifully */}
+        <Box sx={{ 
+          display: "flex", 
+          flexDirection: { xs: "column", md: "row" }, 
+          justifyContent: "space-between", 
+          alignItems: { xs: "center", md: "flex-start" },
+          gap: 1.5,
+          textAlign: { xs: "center", md: "left" }
+        }}>
           <Typography variant="body2" sx={{ color: "rgba(246, 247, 242, 0.5)" }}>
             © {new Date().getFullYear()} CitySprout. All Rights Reserved.
           </Typography>
